@@ -2,7 +2,7 @@ streamlit==1.26.0         # 1.45+ da olur ama 1.26 daha hızlı kurulur
 scikit-learn==1.4.2
 pillow==10.2.0
 gdown==5.2.0
- Uncomment ONLY if TF’ye ihtiyacın varsa
+# Uncomment ONLY if TF’ye ihtiyacın varsa
  tensorflow-cpu==2.15.0
 
 
