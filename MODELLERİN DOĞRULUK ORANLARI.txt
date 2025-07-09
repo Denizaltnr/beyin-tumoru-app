@@ -1,0 +1,5 @@
+CNN = 70.65%
+MobileNet = 76.88%
+VGG16 = 72.21%
+SVM = 94.60%
+Random Forest = 85.54%

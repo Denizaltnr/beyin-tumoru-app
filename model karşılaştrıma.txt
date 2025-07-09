@@ -1,0 +1,22 @@
+import matplotlib.pyplot as plt
+
+# Model isimleri
+models = ['VGG16', 'MobileNet + SVM', 'MobileNet + RF', 'Basit CNN']
+
+# Doğruluk oranları (%)
+accuracies = [92.30, 88.50, 85.20, 90.10]  # Buraya kendi doğruluk oranlarını yaz
+
+plt.figure(figsize=(8, 5))
+bars = plt.bar(models, accuracies, color=['mediumseagreen', 'steelblue', 'darkorange', 'purple'])
+plt.ylim(0, 100)
+plt.ylabel('Doğruluk Oranı (%)', fontsize=12)
+plt.title('Farklı Modellerin Doğruluk Karşılaştırması', fontsize=14)
+
+# Yüzde değerlerini üstüne yaz
+for bar in bars:
+    height = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width()/2.0, height + 1, f'{height:.2f}%', ha='center', fontsize=11)
+
+plt.tight_layout()
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.show()

@@ -1,0 +1,140 @@
+-CNN→150×150, Transfer Learning modelleri→224×224, 
+
+1. Görüntü boyutu, modelin giriş katmanına uygun olmalıdır.
+
+Yapay sinir ağları, sabit boyuttaki girişlerle çalışır. Bu nedenle, eğitim ve test verileri modelin gereksinimlerine göre yeniden boyutlandırılır.
+
+-Normalizasyon
+-Piksel değerleri /255, preprocess_input() fonksiyonu,
+
+Görsel verilerde pikseller genellikle 0–255 aralığında değer alır (8-bit).
+
+Ancak bu değer aralığı sinir ağları için çok geniş olabilir. Bu yüzden ölçeklendirme (normalizasyon) işlemi yapılır.
+
+ 1. Piksel Değerlerini 255'e Bölme (x / 255)
+a. Amaç: Verileri 0 ile 1 arasına çekerek modelin daha hızlı ve kararlı öğrenmesini sağlamak.
+
+b. Kullanım: Özellikle sıfırdan oluşturulan CNN modellerinde yaygın bir yöntemdir.
+
+c. Faydaları:
+
+Modelin eğitim süresi kısalır.
+
+Aktivasyon fonksiyonları (örneğin ReLU, sigmoid) daha verimli çalışır.
+
+Aşırı büyük giriş değerlerinden kaynaklı öğrenme problemleri azaltılır.
+
+2. preprocess_input() Fonksiyonu
+a. Amaç: Transfer learning modelleri (VGG16, ResNet, MobileNet vb.) için modelin beklentisine uygun şekilde giriş verisini normalize etmek.
+
+b. Yalnızca normalleştirme değil, ortalama çıkarma veya kanal sıralama gibi işlemler de içerir.
+
+c. Modelin eğitildiği veriyle aynı ölçekte ve yapıda giriş verilmesini sağlar.
+
+d. Kütüphane örneği:
+from tensorflow.keras.applications.vgg16 import preprocess_input
+
+Dikkat:
+x/255 yerine preprocess_input() kullanmak transfer learning modellerinde daha doğru sonuçlar verir.
+
+
+-Öznitelik Çıkarımı
+-MobileNet son katman özellikleri, 
+
+Öznitelik (Feature) Çıkarımı Nedir?
+Görsellerden anlamlı, ayırt edici bilgilerin çıkarılmasıdır.
+Bu işlemde genellikle önceden eğitilmiş bir modelin alt katmanları (özellik çıkarıcı katmanları) kullanılır.
+
+1. MobileNet ile Öznitelik Çıkarımı
+a. MobileNet, düşük boyutlu ve hızlı çalışan bir transfer learning modelidir.
+
+**b. Eğitimli ağırlıklar sayesinde görüntüden önemli desenleri (kenar, şekil, doku vb.) ayıklayabilir.
+
+c. Son katman (fully connected veya global average pooling katmanı öncesi) modelin öğrenilmiş en güçlü özniteliklerini taşır.
+
+
+ 2. Kullanım Şekli
+MobileNet’in sınıflandırma katmanı çıkarılır (include_top=False).
+
+Görüntü modele verilir ve modelin son katmanından bir öznitelik vektörü (örneğin 1024 boyutlu) elde edilir.
+
+Bu vektör, daha sonra SVM, Random Forest gibi modellerde giriş olarak kullanılır.
+ 
+3. Avantajları
+Derin öğrenme ile çıkarılmış zengin özellikleri klasik makine öğrenmesi modelleriyle birleştirerek yüksek doğruluk sağlar.
+
+Eğitim süresi çok kısalır çünkü model yeniden eğitilmez, sadece öznitelik çıkarımı için kullanılır.
+
+Donanım dostu ve hızlıdır (MobileNet bu iş için idealdir).
+
+-Veri Bölme
+-%80 eğitim / %20 test ayrımı, 
+
+Veri Bölme Nedir?
+Elimizdeki veri seti, modelin öğrenmesi (eğitim) ve değerlendirilmesi (test) amacıyla ikiye ayrılır.
+
+Bu, modelin sadece ezberlemesini değil, genelleme yeteneğini test etmemizi sağlar.
+
+
+%80 Eğitim Verisi:
+
+Model bu verilerle eğitilir.
+
+Giriş ve çıkış örnekleriyle model örüntüleri öğrenmeye çalışır.
+
+Eğitim sürecindeki ağırlık güncellemeleri bu verilerle yapılır.
+
+%20 Test Verisi:
+
+Modelin görmediği verilerle performansı değerlendirilir.
+
+Modelin doğruluk (accuracy), hassasiyet (precision), hata oranı gibi metrikleri bu verilerle ölçülür.
+
+
+80/20 bölüşümü, dengeli bir yaklaşım sağlar:
+
+Veri seti küçükse, eğitim için yeterli veri bırakılır.
+
+Test için de yeterli örnek kalır.
+
+Daha büyük veri setlerinde farklı oranlar da (örneğin 70/30, 90/10) kullanılabilir.
+
+-----------------------------------------------------------------------------------------------
+
+-Conv2D→MaxPool→Flatten→Dense,
+1. Conv2D (Convolutional Katman)
+Amaç: Görüntüdeki kenar, köşe, doku gibi öznitelikleri tespit etmek.
+
+Nasıl Çalışır? Küçük filtreler (kernel) görüntü üzerinde gezdirilir ve çarpım işlemleri yapılır.
+
+Sonuç: Görüntüden öznitelik haritaları (feature maps) çıkarılır.
+
+🧩 Benzetme: Büyüteçle görseli tarayıp önemli desenleri bulmak gibi.
+
+
+2. MaxPooling (Havuzlama Katmanı)
+Amaç: Özellik haritalarının boyutunu küçültmek (downsampling) ve hesaplama yükünü azaltmak.
+
+Nasıl Çalışır? Belirli bir bölgedeki en büyük değeri seçerek veri sıkıştırılır.
+
+Faydası: Modelin daha az parametre ile daha hızlı ve daha az overfitting riskiyle öğrenmesini sağlar.
+
+🧩 Benzetme: Büyük bir resmi özetleyerek küçük bir versiyonunu çıkarmak gibi.
+
+ 3. Flatten (Düzleştirme Katmanı)
+Amaç: 2D öznitelik haritalarını, tam bağlı (dense) katmana aktarabilmek için tek boyutlu bir vektöre çevirmek.
+
+Kullanım Yeri: CNN katmanları ile dense katmanlar arasında geçiş yapar.
+
+🧩 Benzetme: Bir matrisin tüm elemanlarını sıraya dizmek gibi.
+
+ 4. Dense (Tam Bağlantılı Katman)
+Amaç: Modelin sınıflandırma kararını verdiği kısımdır.
+
+Her nöron, önceki tüm nöronlarla bağlantılıdır.
+
+Genellikle son katmanda softmax/sigmoid aktivasyon ile sınıf tahmini yapılır.
+
+🧩 Benzetme: Karar aşaması – tüm öğrenilen bilgilerin bir araya gelip sonuca varması.
+
+

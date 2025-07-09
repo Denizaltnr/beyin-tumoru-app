@@ -1,0 +1,22 @@
+@echo off
+cd /d "C:\Users\ben_d\Desktop\VeriProje"
+
+echo [1] .gitignore dosyasına uzantılar ekleniyor...
+echo *.pkl>> .gitignore
+echo *.h5>> .gitignore
+
+echo [2] Büyük dosyalar git geçmişinden çıkarılıyor...
+git rm --cached svm_model.pkl
+git rm --cached brain_tumor_cnn_model.h5
+git rm --cached mobilenet_brain_tumor_model.h5
+git rm --cached vgg16_brain_tumor_model.h5
+
+echo [3] Commit işlemi yapılıyor...
+git commit -m "Büyük model dosyaları git geçmişinden çıkarıldı"
+
+echo [4] GitHub'a gönderiliyor...
+git push -u origin main
+
+echo.
+echo ✅ Tüm işlemler tamamlandı.
+pause

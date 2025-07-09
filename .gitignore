@@ -1,0 +1,5 @@
+Add-Content .gitignore "models/"
+Add-Content .gitignore "*.h5"
+Add-Content .gitignore "*.pkl"
+Add-Content .gitignore "*.npy"
+
