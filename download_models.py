@@ -10,7 +10,7 @@ if __name__ == "__main__":
     os.makedirs("models", exist_ok=True)
 
     # Örnek: CNN modeli (Google Drive ID'sini kendin koyman gerek)
-    #download_model("1fSVLr3PjR7YsUpBKgU4MvqxG9YzvuN6k", "models/brain_tumor_cnn_model.h5")
+    download_model("1fSVLr3PjR7YsUpBKgU4MvqxG9YzvuN6k", "models/brain_tumor_cnn_model.h5")
 
     # Diğer modeller (Google Drive ID’lerini sen eklemelisin)
     download_model("1CDPS2wtC8BTFeCWQQn5htIi9lms4ROk9", "models/mobilenet_brain_tumor_model.h5")

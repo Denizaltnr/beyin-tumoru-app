@@ -286,6 +286,6 @@ download_if_missing("1PUysW4CWS69HnAOTZTkENOhdi56Bm7dt", "svm_model.pkl")
 download_if_missing("1CDPS2wtC8BTFeCWQQn5htIi9lms4ROk9", "mobilenet_brain_tumor_model.h5")
 download_if_missing("18aoVfmxPaLGV902UulBhQKNrqHEt1TVt", "vgg16_brain_tumor_model.h5")
 download_if_missing("1fSVLr3PjR7YsUpBKgU4MvqxG9YzvuN6k", "brain_tumor_cnn_model.h5")
-
+download_if_missing("1sJq3lUssRlZrxUK6fFkj9U4WhY9z1BRp", "random_forest_model.npy")
 
 
