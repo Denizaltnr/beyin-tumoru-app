@@ -4,6 +4,7 @@ pillow==10.2.0
 gdown==5.2.0
 # Uncomment ONLY if TF’ye ihtiyacın varsa
  tensorflow-cpu==2.15.0
+numpy==1.26.4
 
 
 
